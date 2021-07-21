@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -35,8 +29,10 @@ namespace imemd
 
         private IntPtr MouseHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            Win32API.CURSORINFO cInfo = new Win32API.CURSORINFO();
-            cInfo.cbSize = Marshal.SizeOf(typeof(Win32API.CURSORINFO));
+            Win32API.CURSORINFO cInfo = new Win32API.CURSORINFO
+            {
+                cbSize = Marshal.SizeOf(typeof(Win32API.CURSORINFO))
+            };
             Win32API.GetCursorInfo(ref cInfo);
 
             if ((nCode == Win32API.HC_ACTION) &&
@@ -55,27 +51,28 @@ namespace imemd
         {
             System.Threading.Thread.Sleep(50); // ウインドウがアクティブになるのを待つ
 
-            Win32API.INPUT input = new Win32API.INPUT();
-            input.type = Win32API.INPUT_KEYBOARD;
+            Win32API.INPUT input = new Win32API.INPUT
+            {
+                type = Win32API.INPUT_KEYBOARD
+            };
             input.ki.wScan = 0;
             input.ki.time = 0;
             input.ki.dwExtraInfo = Win32API.GetMessageExtraInfo();
+            input.ki.wVk = Win32API.VK_KANJI;
 
             //Key Down
-            input.ki.wVk = Win32API.VK_KANJI;
-            input.ki.dwFlags = 0;
+            input.ki.dwFlags = Win32API.KEYEVENTF_KEYDOWN;
             Win32API.SendInput(1, ref input, Marshal.SizeOf(typeof(Win32API.INPUT)));
+
             //Key Up
-            input.ki.wVk = Win32API.VK_KANJI;
             input.ki.dwFlags = Win32API.KEYEVENTF_KEYUP;
             Win32API.SendInput(1, ref input, Marshal.SizeOf(typeof(Win32API.INPUT)));
 
             //Key Down
-            input.ki.wVk = Win32API.VK_KANJI;
-            input.ki.dwFlags = 0;
+            input.ki.dwFlags = Win32API.KEYEVENTF_KEYDOWN;
             Win32API.SendInput(1, ref input, Marshal.SizeOf(typeof(Win32API.INPUT)));
+
             //Key Up
-            input.ki.wVk = Win32API.VK_KANJI;
             input.ki.dwFlags = Win32API.KEYEVENTF_KEYUP;
             Win32API.SendInput(1, ref input, Marshal.SizeOf(typeof(Win32API.INPUT)));
         }

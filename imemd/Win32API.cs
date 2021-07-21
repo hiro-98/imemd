@@ -86,6 +86,7 @@ namespace imemd
         }
 
         public const int INPUT_KEYBOARD = 1;
+        public const int KEYEVENTF_KEYDOWN = 0x0;
         public const int KEYEVENTF_KEYUP = 0x2;
         public const int VK_KANJI = 0x19;
         public const int HC_ACTION = 0;
