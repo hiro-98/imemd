@@ -1,4 +1,4 @@
-﻿namespace imemd
+namespace imemd
 {
     partial class SettingForm
     {
@@ -44,7 +44,7 @@
             // notifyIcon
             // 
             this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
-            this.notifyIcon.Text = "IME Mode Display";
+            this.notifyIcon.Text = "IME Mode Display for Google日本語入力";
             this.notifyIcon.Visible = true;
             this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon_MouseDoubleClick);
             // 
@@ -140,7 +140,7 @@
             this.Controls.Add(this.labelClickWaitMS);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SettingForm";
-            this.Text = "IME Mode Display";
+            this.Text = "IME Mode Display for Google日本語入力";
             ((System.ComponentModel.ISupportInitialize)(this.numClickWaitMS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSameWindowSec)).EndInit();
             this.ResumeLayout(false);
