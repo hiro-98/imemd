@@ -7,7 +7,7 @@ namespace imemd
     class Hook
     {
         public int clickWaitMs = 50;
-        public int sameWindowSec = 10;
+        public int sameWindowSec = 5;
 
         private IntPtr hHook;
         private IntPtr lastActiveWindow;

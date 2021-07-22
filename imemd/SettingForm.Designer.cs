@@ -1,4 +1,4 @@
-namespace imemd
+﻿namespace imemd
 {
     partial class SettingForm
     {
@@ -101,7 +101,7 @@ namespace imemd
             this.numSameWindowSec.Size = new System.Drawing.Size(65, 19);
             this.numSameWindowSec.TabIndex = 3;
             this.numSameWindowSec.Value = new decimal(new int[] {
-            10,
+            5,
             0,
             0,
             0});
