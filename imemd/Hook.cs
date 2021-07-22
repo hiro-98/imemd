@@ -100,12 +100,14 @@ namespace imemd
 
         private bool IsElapsedSameWindowSec()
         {
+            bool ret = false;
             if ((lastWindowChange + TimeSpan.FromSeconds(sameWindowSec)) <= DateTime.Now)
             {
-                lastWindowChange = DateTime.Now;
-                return true;
+                ret = true;
             }
-            return false;
+            lastWindowChange = DateTime.Now;
+
+            return ret;
         }
 
         private bool IsChangeWindow()
