@@ -11,6 +11,7 @@ namespace imemd
         public int sameWindowSec = 10;
 
         private IntPtr hHook;
+        private DateTime lastWindowChange;
 
         public int SetMouseHook()
         {
@@ -21,6 +22,10 @@ namespace imemd
                 MessageBox.Show("Error: SetWindowsHookEx", "Error");
                 return -1;
             }
+
+            lastWindowChange = new DateTime();
+            lastWindowChange = DateTime.Now;
+
             return 0;
         }
 
@@ -33,12 +38,11 @@ namespace imemd
             Win32API.GetCursorInfo(ref cInfo);
 
             if ((nCode == Win32API.HC_ACTION) &&
-                (Win32API.MOUSE_MESSAGE.WM_LBUTTONUP == (Win32API.MOUSE_MESSAGE)wParam))
+                ((Win32API.MOUSE_MESSAGE.WM_LBUTTONUP == (Win32API.MOUSE_MESSAGE)wParam)) &&
+                (cInfo.hCursor == Win32API.LoadCursor(IntPtr.Zero, (int)Win32API.IDC_STANDARD_CURSORS.IDC_IBEAM)) &&
+                (IsElapsedSameWindowSec() == true))
             {
-                if (cInfo.hCursor == Win32API.LoadCursor(IntPtr.Zero, (int)Win32API.IDC_STANDARD_CURSORS.IDC_IBEAM))
-                {
-                    InputZenkaku();
-                }
+                InputZenkaku();
             }
 
             return Win32API.CallNextHookEx(this.hHook, nCode, wParam, lParam);
@@ -72,6 +76,16 @@ namespace imemd
             //Key Up
             input.ki.dwFlags = Win32API.KEYEVENTF_KEYUP;
             Win32API.SendInput(1, ref input, Marshal.SizeOf(typeof(Win32API.INPUT)));
+        }
+
+        private bool IsElapsedSameWindowSec()
+        {
+            if ((lastWindowChange + TimeSpan.FromSeconds(sameWindowSec)) <= DateTime.Now)
+            {
+                lastWindowChange = DateTime.Now;
+                return true;
+            }
+            return false;
         }
     }
 }
