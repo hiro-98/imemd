@@ -15,11 +15,15 @@ namespace imemd
 
             // コンテキストメニュー
             ContextMenuStrip contextMenuStrip = new ContextMenuStrip();
-            ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem();
-            toolStripMenuItem.Text = "終了";
+            ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem
+            {
+                Text = "終了"
+            };
             toolStripMenuItem.Click += ToolStripExit_Click;
             contextMenuStrip.Items.Add(toolStripMenuItem);
             notifyIcon.ContextMenuStrip = contextMenuStrip;
+
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
             this.Visible = false;
             hook = new Hook();
@@ -47,6 +51,7 @@ namespace imemd
 
         private void ToolStripExit_Click(object sender, EventArgs e)
         {
+            notifyIcon.Dispose();
             Application.Exit();
         }
     }
