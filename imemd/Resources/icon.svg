@@ -12,10 +12,10 @@
      viewBox="0 0 32 31.999999"
      version="1.1"
      id="svg16"
-     sodipodi:docname="1049_cm_h (1).svg"
-     inkscape:export-filename="C:\Users\hiro\Desktop\1049_cm_h (1).png"
-     inkscape:export-xdpi="118.1543"
-     inkscape:export-ydpi="118.1543"
+     sodipodi:docname="icon.svg"
+     inkscape:export-filename="C:\Users\hiro\Desktop\icon32.png"
+     inkscape:export-xdpi="96"
+     inkscape:export-ydpi="96"
      inkscape:version="0.92.2 (5c3e80d, 2017-08-06)">
     <metadata
          id="metadata20">
@@ -68,14 +68,14 @@
     <title
          id="title6">1049_cm_h</title>
     <polygon
-         style="fill:#ffffff;fill-opacity:1;stroke:#231815;stroke-width:1.53188336px;stroke-linecap:round;stroke-linejoin:round"
+         style="fill:#ffffff;fill-opacity:1;stroke:#1e6fb9;stroke-width:1.55807137;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
          id="polygon12"
-         points="35,30.97 35,12 13,12 13,30.97 21.11,30.97 24,36 26.89,30.97 "
+         points="13,12 13,30.97 21.11,30.97 24,36 26.89,30.97 35,30.97 35,12 "
          class="a"
-         transform="matrix(1.3636364,0,0,1.25,-16.727273,-13.999999)" />
+         transform="matrix(1.3636363,0,0,1.2083333,-16.727272,-13.499999)" />
     <text
          xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.31658363px;line-height:30;font-family:'Meiryo UI';-inkscape-font-specification:'Meiryo UI';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.31658363px;line-height:30;font-family:'Meiryo UI';-inkscape-font-specification:'Meiryo UI';letter-spacing:0px;word-spacing:0px;fill:#3a3838;fill-opacity:1;stroke:none;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
          x="7.1371002"
          y="21.159094"
          id="text832"
@@ -85,5 +85,5 @@
              id="tspan830"
              x="7.1371002"
              y="21.159094"
-             style="stroke-width:0.99999994px">あ</tspan></text>
+             style="stroke-width:0.99999994px;fill:#3a3838;fill-opacity:1;">あ</tspan></text>
 </svg>
