@@ -46,12 +46,20 @@ namespace imemd
             Win32API.GetCursorInfo(ref cInfo);
 
             if ((nCode == Win32API.HC_ACTION) &&
-                ((Win32API.MOUSE_MESSAGE.WM_LBUTTONUP == (Win32API.MOUSE_MESSAGE)wParam)) &&
-                (IBeamCursorCheck(cInfo) == true))
+                ((Win32API.MOUSE_MESSAGE.WM_LBUTTONUP == (Win32API.MOUSE_MESSAGE)wParam)))
             {
-                if ((IsElapsedSameWindowSec() == true) || (IsChangeWindow() == true))
+                if (IsChangeWindow() == true)
                 {
                     InputZenkaku();
+                    return Win32API.CallNextHookEx(this.hHook, nCode, wParam, lParam);
+                }
+
+                if (IsElapsedSameWindowSec() == true)
+                {
+                    if (IBeamCursorCheck(cInfo) == true)
+                    {
+                        InputZenkaku();
+                    }
                 }
             }
 

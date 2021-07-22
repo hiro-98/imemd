@@ -69,7 +69,7 @@ namespace imemd
 
         private void BtnOK_Click(object sender, EventArgs e)
         {
-            hook.UpdateHookSettings((int)numClickWaitMS.Value, (int)numClickWaitMS.Value, this.checkIBeam.Checked);
+            hook.UpdateHookSettings((int)numClickWaitMS.Value, (int)numSameWindowSec.Value, this.checkIBeam.Checked);
 
             this.Visible = false;
         }
