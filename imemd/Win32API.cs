@@ -6,6 +6,9 @@ namespace imemd
     class Win32API
     {
         [DllImport("user32.dll")]
+        public static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll")]
         public static extern IntPtr GetCursorInfo(ref CURSORINFO pci);
 
         [DllImport("user32.dll")]

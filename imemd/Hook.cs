@@ -11,6 +11,7 @@ namespace imemd
         public int sameWindowSec = 10;
 
         private IntPtr hHook;
+        private IntPtr lastActiveWindow;
         private DateTime lastWindowChange;
 
         public int SetMouseHook()
@@ -25,6 +26,7 @@ namespace imemd
 
             lastWindowChange = new DateTime();
             lastWindowChange = DateTime.Now;
+            lastActiveWindow = Win32API.GetForegroundWindow();
 
             return 0;
         }
@@ -39,10 +41,12 @@ namespace imemd
 
             if ((nCode == Win32API.HC_ACTION) &&
                 ((Win32API.MOUSE_MESSAGE.WM_LBUTTONUP == (Win32API.MOUSE_MESSAGE)wParam)) &&
-                (cInfo.hCursor == Win32API.LoadCursor(IntPtr.Zero, (int)Win32API.IDC_STANDARD_CURSORS.IDC_IBEAM)) &&
-                (IsElapsedSameWindowSec() == true))
+                (cInfo.hCursor == Win32API.LoadCursor(IntPtr.Zero, (int)Win32API.IDC_STANDARD_CURSORS.IDC_IBEAM)))
             {
-                InputZenkaku();
+                if ((IsElapsedSameWindowSec() == true) || (IsChangeWindow() == true))
+                {
+                    InputZenkaku();
+                }
             }
 
             return Win32API.CallNextHookEx(this.hHook, nCode, wParam, lParam);
@@ -83,6 +87,16 @@ namespace imemd
             if ((lastWindowChange + TimeSpan.FromSeconds(sameWindowSec)) <= DateTime.Now)
             {
                 lastWindowChange = DateTime.Now;
+                return true;
+            }
+            return false;
+        }
+
+        private bool IsChangeWindow()
+        {
+            if (lastActiveWindow != Win32API.GetForegroundWindow())
+            {
+                lastActiveWindow = Win32API.GetForegroundWindow();
                 return true;
             }
             return false;
