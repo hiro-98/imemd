@@ -8,6 +8,8 @@ namespace imemd
     public partial class SettingForm : Form
     {
         private IntPtr hHook;
+        private int clickWaitMs = 50;
+        private int sameWindowSec = 10;
 
         public SettingForm()
         {
@@ -49,7 +51,7 @@ namespace imemd
 
         private void InputZenkaku()
         {
-            System.Threading.Thread.Sleep(50); // ウインドウがアクティブになるのを待つ
+            System.Threading.Thread.Sleep(clickWaitMs); // ウインドウがアクティブになるのを待つ
 
             Win32API.INPUT input = new Win32API.INPUT
             {
@@ -75,6 +77,12 @@ namespace imemd
             //Key Up
             input.ki.dwFlags = Win32API.KEYEVENTF_KEYUP;
             Win32API.SendInput(1, ref input, Marshal.SizeOf(typeof(Win32API.INPUT)));
+        }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            clickWaitMs = (int)numClickWaitMS.Value;
+            sameWindowSec = (int)numSameWindowSec.Value;
         }
     }
 }
