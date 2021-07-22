@@ -42,9 +42,7 @@ namespace imemd
 
         private void BtnOK_Click(object sender, EventArgs e)
         {
-            hook.clickWaitMs = (int)numClickWaitMS.Value;
-            hook.sameWindowSec = (int)numSameWindowSec.Value;
-            hook.iBeamCheck = this.checkIBeam.Checked;
+            hook.UpdateHookSettings((int)numClickWaitMS.Value, (int)numClickWaitMS.Value, this.checkIBeam.Checked);
 
             this.Visible = false;
         }

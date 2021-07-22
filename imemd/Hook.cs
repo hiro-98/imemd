@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
@@ -6,9 +6,9 @@ namespace imemd
 {
     class Hook
     {
-        public int clickWaitMs = 50;
-        public int sameWindowSec = 5;
-        public bool iBeamCheck = false;
+        private int clickWaitMs = 50;
+        private int sameWindowSec = 5;
+        private bool iBeamCheck = false;
 
         private IntPtr hHook;
         private IntPtr lastActiveWindow;
@@ -28,6 +28,13 @@ namespace imemd
             lastActiveWindow = Win32API.GetForegroundWindow();
 
             return true;
+        }
+
+        public void UpdateHookSettings(int clickWait, int windowCheck, bool iBeam)
+        {
+            this.clickWaitMs = clickWait;
+            this.sameWindowSec = windowCheck;
+            this.iBeamCheck = iBeam;
         }
 
         private IntPtr MouseHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
