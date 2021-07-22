@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
 
 namespace imemd
 {
     public partial class SettingForm : Form
     {
-        private readonly Hook hook;
+        private Hook hook;
 
         public SettingForm()
         {
             InitializeComponent();
 
-            // コンテキストメニュー
+            // システムトレイ
             ContextMenuStrip contextMenuStrip = new ContextMenuStrip();
             ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem
             {
@@ -23,11 +21,22 @@ namespace imemd
             contextMenuStrip.Items.Add(toolStripMenuItem);
             notifyIcon.ContextMenuStrip = contextMenuStrip;
 
+            // フォーム表示
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
-
             this.Visible = false;
+        }
+
+        public bool SetHook()
+        {
             hook = new Hook();
-            hook.SetMouseHook();
+            if (hook.SetMouseHook() == false)
+            {
+                MessageBox.Show("Error: SetWindowsHookEx", "Error");
+                notifyIcon.Dispose();
+                this.Close();
+                return false;
+            }
+            return true;
         }
 
 

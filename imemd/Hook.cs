@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
@@ -14,21 +13,20 @@ namespace imemd
         private IntPtr lastActiveWindow;
         private DateTime lastWindowChange;
 
-        public int SetMouseHook()
+        public bool SetMouseHook()
         {
             IntPtr hModule = Win32API.GetModuleHandle(Process.GetCurrentProcess().MainModule.ModuleName);
             this.hHook = Win32API.SetWindowsHookEx((int)Win32API.HOOK_TYPE.WH_MOUSE_LL, MouseHookCallback, hModule, IntPtr.Zero);
             if (this.hHook == null)
             {
-                MessageBox.Show("Error: SetWindowsHookEx", "Error");
-                return -1;
+                return false;
             }
 
             lastWindowChange = new DateTime();
             lastWindowChange = DateTime.Now;
             lastActiveWindow = Win32API.GetForegroundWindow();
 
-            return 0;
+            return true;
         }
 
         private IntPtr MouseHookCallback(int nCode, IntPtr wParam, IntPtr lParam)

@@ -13,7 +13,11 @@ namespace imemd
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            new SettingForm();
+            SettingForm settingForm = new SettingForm();
+            if (settingForm.SetHook() == false)
+            {
+                return;
+            }
             Application.Run();
         }
     }
