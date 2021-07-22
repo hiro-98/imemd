@@ -43,9 +43,8 @@
             // 
             // notifyIcon
             // 
-            this.notifyIcon.BalloonTipText = "IME Mode Display for Google日本語入力";
             this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
-            this.notifyIcon.Text = "notifyIcon";
+            this.notifyIcon.Text = "IME Mode Display";
             this.notifyIcon.Visible = true;
             this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon_MouseDoubleClick);
             // 

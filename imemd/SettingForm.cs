@@ -12,6 +12,15 @@ namespace imemd
         public SettingForm()
         {
             InitializeComponent();
+
+            // コンテキストメニュー
+            ContextMenuStrip contextMenuStrip = new ContextMenuStrip();
+            ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem();
+            toolStripMenuItem.Text = "終了";
+            toolStripMenuItem.Click += ToolStripExit_Click;
+            contextMenuStrip.Items.Add(toolStripMenuItem);
+            notifyIcon.ContextMenuStrip = contextMenuStrip;
+
             this.Visible = false;
             hook = new Hook();
             hook.SetMouseHook();
@@ -34,6 +43,11 @@ namespace imemd
         private void NotifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             this.Visible = true;
+        }
+
+        private void ToolStripExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
