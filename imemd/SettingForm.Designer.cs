@@ -37,6 +37,7 @@
             this.numSameWindowSec = new System.Windows.Forms.NumericUpDown();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
+            this.checkIBeam = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numClickWaitMS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSameWindowSec)).BeginInit();
             this.SuspendLayout();
@@ -108,7 +109,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(187, 129);
+            this.btnCancel.Location = new System.Drawing.Point(191, 155);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 4;
@@ -118,7 +119,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(106, 129);
+            this.btnOK.Location = new System.Drawing.Point(110, 155);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 5;
@@ -126,12 +127,24 @@
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.BtnOK_Click);
             // 
+            // checkIBeam
+            // 
+            this.checkIBeam.AutoSize = true;
+            this.checkIBeam.Location = new System.Drawing.Point(12, 109);
+            this.checkIBeam.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.checkIBeam.Name = "checkIBeam";
+            this.checkIBeam.Size = new System.Drawing.Size(107, 16);
+            this.checkIBeam.TabIndex = 6;
+            this.checkIBeam.Text = "Iビーム判定を行う";
+            this.checkIBeam.UseVisualStyleBackColor = true;
+            // 
             // SettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(274, 164);
+            this.ClientSize = new System.Drawing.Size(274, 190);
             this.ControlBox = false;
+            this.Controls.Add(this.checkIBeam);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.numSameWindowSec);
@@ -157,6 +170,7 @@
         private System.Windows.Forms.NumericUpDown numSameWindowSec;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.CheckBox checkIBeam;
     }
 }
 

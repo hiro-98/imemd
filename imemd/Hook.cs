@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
@@ -8,6 +8,7 @@ namespace imemd
     {
         public int clickWaitMs = 50;
         public int sameWindowSec = 5;
+        public bool iBeamCheck = false;
 
         private IntPtr hHook;
         private IntPtr lastActiveWindow;
@@ -39,7 +40,7 @@ namespace imemd
 
             if ((nCode == Win32API.HC_ACTION) &&
                 ((Win32API.MOUSE_MESSAGE.WM_LBUTTONUP == (Win32API.MOUSE_MESSAGE)wParam)) &&
-                (cInfo.hCursor == Win32API.LoadCursor(IntPtr.Zero, (int)Win32API.IDC_STANDARD_CURSORS.IDC_IBEAM)))
+                (IBeamCursorCheck(cInfo) == true))
             {
                 if ((IsElapsedSameWindowSec() == true) || (IsChangeWindow() == true))
                 {
@@ -48,6 +49,16 @@ namespace imemd
             }
 
             return Win32API.CallNextHookEx(this.hHook, nCode, wParam, lParam);
+        }
+
+        private bool IBeamCursorCheck(Win32API.CURSORINFO info)
+        {
+            if ((info.hCursor == Win32API.LoadCursor(IntPtr.Zero, (int)Win32API.IDC_STANDARD_CURSORS.IDC_IBEAM)) ||
+               (this.iBeamCheck == false))
+            {
+                return true;
+            }
+            return false;
         }
 
         private void InputZenkaku()

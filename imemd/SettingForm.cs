@@ -44,6 +44,7 @@ namespace imemd
         {
             hook.clickWaitMs = (int)numClickWaitMS.Value;
             hook.sameWindowSec = (int)numSameWindowSec.Value;
+            hook.iBeamCheck = this.checkIBeam.Checked;
 
             this.Visible = false;
         }
