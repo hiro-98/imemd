@@ -38,6 +38,7 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.checkIBeam = new System.Windows.Forms.CheckBox();
+            this.tipIBeam = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.numClickWaitMS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSameWindowSec)).BeginInit();
             this.SuspendLayout();
@@ -112,7 +113,7 @@
             this.btnCancel.Location = new System.Drawing.Point(191, 155);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 4;
+            this.btnCancel.TabIndex = 50;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
@@ -122,7 +123,7 @@
             this.btnOK.Location = new System.Drawing.Point(110, 155);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 5;
+            this.btnOK.TabIndex = 40;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.BtnOK_Click);
@@ -133,9 +134,10 @@
             this.checkIBeam.Location = new System.Drawing.Point(12, 109);
             this.checkIBeam.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.checkIBeam.Name = "checkIBeam";
-            this.checkIBeam.Size = new System.Drawing.Size(107, 16);
-            this.checkIBeam.TabIndex = 6;
-            this.checkIBeam.Text = "Iビーム判定を行う";
+            this.checkIBeam.Size = new System.Drawing.Size(209, 16);
+            this.checkIBeam.TabIndex = 30;
+            this.checkIBeam.Text = "マウスカーソルがIビームの場合のみ表示";
+            this.tipIBeam.SetToolTip(this.checkIBeam, "ONにするとChromeで新しいタブを開いたときに対応できなくなります");
             this.checkIBeam.UseVisualStyleBackColor = true;
             // 
             // SettingForm
@@ -171,6 +173,7 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.CheckBox checkIBeam;
+        private System.Windows.Forms.ToolTip tipIBeam;
     }
 }
 
