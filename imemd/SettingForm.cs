@@ -7,7 +7,7 @@ namespace imemd
 {
     public partial class SettingForm : Form
     {
-        private Hook hook;
+        private readonly Hook hook;
 
         public SettingForm()
         {
@@ -18,7 +18,7 @@ namespace imemd
         }
 
 
-        private void btnOK_Click(object sender, EventArgs e)
+        private void BtnOK_Click(object sender, EventArgs e)
         {
             hook.clickWaitMs = (int)numClickWaitMS.Value;
             hook.sameWindowSec = (int)numSameWindowSec.Value;
@@ -26,12 +26,12 @@ namespace imemd
             this.Visible = false;
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
             this.Visible = false;
         }
 
-        private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void NotifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             this.Visible = true;
         }
