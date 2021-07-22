@@ -12,6 +12,7 @@ namespace imemd
         public SettingForm()
         {
             InitializeComponent();
+            this.Visible = false;
             hook = new Hook();
             hook.SetMouseHook();
         }
@@ -21,6 +22,18 @@ namespace imemd
         {
             hook.clickWaitMs = (int)numClickWaitMS.Value;
             hook.sameWindowSec = (int)numSameWindowSec.Value;
+
+            this.Visible = false;
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Visible = false;
+        }
+
+        private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.Visible = true;
         }
     }
 }
