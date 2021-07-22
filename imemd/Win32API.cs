@@ -1,10 +1,18 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace imemd
 {
     class Win32API
     {
+        [DllImport("kernel32.dll")]
+        public static extern uint GetPrivateProfileString(
+            string lpAppName, string lpKeyName, string lpDefault, StringBuilder lpReturnedString, uint nSize, string lpFileName);
+
+        [DllImport("kernel32.dll")]
+        public static extern int WritePrivateProfileString(string lpAppName, string lpKeyName, string lpString, string lpFileName);
+
         [DllImport("user32.dll")]
         public static extern IntPtr GetForegroundWindow();
 
@@ -14,7 +22,7 @@ namespace imemd
         [DllImport("user32.dll")]
         public static extern IntPtr LoadCursor(IntPtr hInstance, int lpCursorName);
 
-        [DllImport("kernel32.dll", EntryPoint = "GetModuleHandleW", SetLastError = true)]
+        [DllImport("kernel32.dll")]
         public static extern IntPtr GetModuleHandle(string moduleName);
 
         [DllImport("user32.dll")]
