@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
@@ -54,6 +54,12 @@ namespace imemd
             if ((nCode == Win32API.HC_ACTION) &&
                 ((Win32API.MOUSE_MESSAGE.WM_LBUTTONUP == (Win32API.MOUSE_MESSAGE)wParam)))
             {
+                // フルスクリーンなら実行しない
+                if (IsFullscreen() == true)
+                {
+                    return Win32API.CallNextHookEx(this.hHook, nCode, wParam, lParam);
+                }
+
                 // ウインドウ変更時は経過時間に関係なく実行
                 if (IsChangeWindow() == true)
                 {
@@ -67,20 +73,31 @@ namespace imemd
                     return Win32API.CallNextHookEx(this.hHook, nCode, wParam, lParam);
                 }
 
+
                 // Iビーム判定
                 if (IBeamCursorCheck() == false)
-                    {
+                {
                     return Win32API.CallNextHookEx(this.hHook, nCode, wParam, lParam);
                 }
 
-                        InputZenkaku();
-                    }
-
-            return Win32API.CallNextHookEx(this.hHook, nCode, wParam, lParam);
-                }
+                InputZenkaku();
             }
 
             return Win32API.CallNextHookEx(this.hHook, nCode, wParam, lParam);
+        }
+
+        private bool IsFullscreen()
+        {
+            Win32API.GetWindowRect(new HandleRef(this, lastActiveWindow), out Win32API.RECT fullRect);
+            Win32API.GetClientRect(lastActiveWindow, out Win32API.RECT cliRect);
+            if (fullRect.left == cliRect.left &&
+                fullRect.top == cliRect.top &&
+                fullRect.right == cliRect.right &&
+                fullRect.bottom == cliRect.bottom)
+            {
+                return true;
+            }
+            return false;
         }
 
         private bool IBeamCursorCheck()
