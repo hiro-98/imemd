@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
@@ -49,11 +49,7 @@ namespace imemd
 
         private IntPtr MouseHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            Win32API.CURSORINFO cInfo = new Win32API.CURSORINFO
-            {
-                cbSize = Marshal.SizeOf(typeof(Win32API.CURSORINFO))
-            };
-            Win32API.GetCursorInfo(ref cInfo);
+
 
             if ((nCode == Win32API.HC_ACTION) &&
                 ((Win32API.MOUSE_MESSAGE.WM_LBUTTONUP == (Win32API.MOUSE_MESSAGE)wParam)))
@@ -66,6 +62,11 @@ namespace imemd
 
                 if (IsElapsedSameWindowSec() == true)
                 {
+                    Win32API.CURSORINFO cInfo = new Win32API.CURSORINFO
+                    {
+                        cbSize = Marshal.SizeOf(typeof(Win32API.CURSORINFO))
+                    };
+                    Win32API.GetCursorInfo(ref cInfo);
                     if (IBeamCursorCheck(cInfo) == true)
                     {
                         InputZenkaku();
