@@ -54,32 +54,44 @@ namespace imemd
             if ((nCode == Win32API.HC_ACTION) &&
                 ((Win32API.MOUSE_MESSAGE.WM_LBUTTONUP == (Win32API.MOUSE_MESSAGE)wParam)))
             {
+                // ウインドウ変更時は経過時間に関係なく実行
                 if (IsChangeWindow() == true)
                 {
                     InputZenkaku();
                     return Win32API.CallNextHookEx(this.hHook, nCode, wParam, lParam);
                 }
 
-                if (IsElapsedSameWindowSec() == true)
+                // 時間経過してないなら実行しない
+                if (IsElapsedSameWindowSec() == false)
                 {
-                    Win32API.CURSORINFO cInfo = new Win32API.CURSORINFO
+                    return Win32API.CallNextHookEx(this.hHook, nCode, wParam, lParam);
+                }
+
+                // Iビーム判定
+                if (IBeamCursorCheck() == false)
                     {
-                        cbSize = Marshal.SizeOf(typeof(Win32API.CURSORINFO))
-                    };
-                    Win32API.GetCursorInfo(ref cInfo);
-                    if (IBeamCursorCheck(cInfo) == true)
-                    {
+                    return Win32API.CallNextHookEx(this.hHook, nCode, wParam, lParam);
+                }
+
                         InputZenkaku();
                     }
+
+            return Win32API.CallNextHookEx(this.hHook, nCode, wParam, lParam);
                 }
             }
 
             return Win32API.CallNextHookEx(this.hHook, nCode, wParam, lParam);
         }
 
-        private bool IBeamCursorCheck(Win32API.CURSORINFO info)
+        private bool IBeamCursorCheck()
         {
-            if ((info.hCursor == Win32API.LoadCursor(IntPtr.Zero, (int)Win32API.IDC_STANDARD_CURSORS.IDC_IBEAM)) ||
+            Win32API.CURSORINFO cInfo = new Win32API.CURSORINFO
+            {
+                cbSize = Marshal.SizeOf(typeof(Win32API.CURSORINFO))
+            };
+            Win32API.GetCursorInfo(ref cInfo);
+
+            if ((cInfo.hCursor == Win32API.LoadCursor(IntPtr.Zero, (int)Win32API.IDC_STANDARD_CURSORS.IDC_IBEAM)) ||
                (this.iBeamCheck == false))
             {
                 return true;
