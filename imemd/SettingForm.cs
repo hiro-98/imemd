@@ -35,6 +35,7 @@ namespace imemd
             {
                 MessageBox.Show("Error: SetWindowsHookEx", "Error");
                 notifyIcon.Dispose();
+                hook.FreeAllocHandle();
                 this.Close();
                 return false;
             }

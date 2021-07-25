@@ -13,11 +13,21 @@ namespace imemd
         private IntPtr hHook;
         private IntPtr lastActiveWindow;
         private DateTime lastWindowChange;
+        private Win32API.HOOKPROC hHookProc;
+        private GCHandle allocHandle;
+
+        public void FreeAllocHandle()
+        {
+            this.allocHandle.Free();
+        }
 
         public bool SetMouseHook()
         {
+            this.hHookProc = MouseHookCallback;
+            this.allocHandle = GCHandle.Alloc(this.hHookProc);
+
             IntPtr hModule = Win32API.GetModuleHandle(Process.GetCurrentProcess().MainModule.ModuleName);
-            this.hHook = Win32API.SetWindowsHookEx((int)Win32API.HOOK_TYPE.WH_MOUSE_LL, MouseHookCallback, hModule, IntPtr.Zero);
+            this.hHook = Win32API.SetWindowsHookEx((int)Win32API.HOOK_TYPE.WH_MOUSE_LL, this.hHookProc, hModule, IntPtr.Zero);
             if (this.hHook == null)
             {
                 return false;
