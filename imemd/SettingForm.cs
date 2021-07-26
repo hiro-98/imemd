@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Windows.Forms;
 
@@ -6,6 +6,10 @@ namespace imemd
 {
     public partial class SettingForm : Form
     {
+        private const string DEFAULT_CLICK_WAIT_MS = "50";
+        private const string DEFAULT_SAME_WINDOW_CHECK = "3";
+        private const string DEFAULT_CHECK_IBEAM = "false";
+
         private Hook hook;
 
         public SettingForm()
@@ -56,15 +60,18 @@ namespace imemd
 
             StringBuilder readSB = new StringBuilder(128);
             Win32API.GetPrivateProfileString(
-                "Main", "ClickWaitMS", "50", readSB, Convert.ToUInt32(readSB.Capacity), iniFileName);
+                "Main", "ClickWaitMS", DEFAULT_CLICK_WAIT_MS,
+                readSB, Convert.ToUInt32(readSB.Capacity), iniFileName);
             this.numClickWaitMS.Value = int.Parse(readSB.ToString());
 
             Win32API.GetPrivateProfileString(
-                "Main", "SameWindowSec", "5", readSB, Convert.ToUInt32(readSB.Capacity), iniFileName);
+                "Main", "SameWindowSec", DEFAULT_SAME_WINDOW_CHECK,
+                readSB, Convert.ToUInt32(readSB.Capacity), iniFileName);
             this.numSameWindowSec.Value = int.Parse(readSB.ToString());
 
             Win32API.GetPrivateProfileString(
-                "Main", "CheckIBeam", "false", readSB, Convert.ToUInt32(readSB.Capacity), iniFileName);
+                "Main", "CheckIBeam", DEFAULT_CHECK_IBEAM,
+                readSB, Convert.ToUInt32(readSB.Capacity), iniFileName);
             this.checkIBeam.Checked = bool.Parse(readSB.ToString());
         }
 

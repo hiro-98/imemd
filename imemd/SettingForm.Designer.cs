@@ -61,6 +61,7 @@
             // 
             // numClickWaitMS
             // 
+            this.numClickWaitMS.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.numClickWaitMS.Increment = new decimal(new int[] {
             50,
             0,
@@ -75,11 +76,6 @@
             this.numClickWaitMS.Name = "numClickWaitMS";
             this.numClickWaitMS.Size = new System.Drawing.Size(63, 19);
             this.numClickWaitMS.TabIndex = 1;
-            this.numClickWaitMS.Value = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
             // 
             // labelSameWindowSec
             // 
@@ -93,6 +89,7 @@
             // 
             // numSameWindowSec
             // 
+            this.numSameWindowSec.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.numSameWindowSec.Location = new System.Drawing.Point(12, 77);
             this.numSameWindowSec.Maximum = new decimal(new int[] {
             60,
@@ -102,11 +99,6 @@
             this.numSameWindowSec.Name = "numSameWindowSec";
             this.numSameWindowSec.Size = new System.Drawing.Size(65, 19);
             this.numSameWindowSec.TabIndex = 3;
-            this.numSameWindowSec.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
             // 
             // btnCancel
             // 

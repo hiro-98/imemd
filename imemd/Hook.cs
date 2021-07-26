@@ -6,8 +6,8 @@ namespace imemd
 {
     class Hook
     {
-        private int clickWaitMs = 50;
-        private int sameWindowSec = 5;
+        private int clickWaitMs;
+        private int sameWindowSec;
         private bool iBeamCheck = false;
 
         private IntPtr hHook;
