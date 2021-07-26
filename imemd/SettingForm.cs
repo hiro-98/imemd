@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Text;
 using System.Windows.Forms;
 
@@ -26,8 +26,6 @@ namespace imemd
             contextMenuStrip.Items.Add(toolStripMenuItem);
             notifyIcon.ContextMenuStrip = contextMenuStrip;
 
-            ReadSetting();
-
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.Visible = false;
         }
@@ -35,6 +33,9 @@ namespace imemd
         public bool SetHook()
         {
             hook = new Hook();
+            ReadSetting();
+            hook.UpdateHookSettings((int)numClickWaitMS.Value, (int)numSameWindowSec.Value, this.checkIBeam.Checked);
+
             if (hook.SetMouseHook() == false)
             {
                 MessageBox.Show("Error: SetWindowsHookEx", "Error");
@@ -57,7 +58,6 @@ namespace imemd
         private void ReadSetting()
         {
             string iniFileName = AppDomain.CurrentDomain.BaseDirectory + "setting.ini";
-
             StringBuilder readSB = new StringBuilder(128);
             Win32API.GetPrivateProfileString(
                 "Main", "ClickWaitMS", DEFAULT_CLICK_WAIT_MS,
@@ -78,6 +78,7 @@ namespace imemd
         private void BtnOK_Click(object sender, EventArgs e)
         {
             hook.UpdateHookSettings((int)numClickWaitMS.Value, (int)numSameWindowSec.Value, this.checkIBeam.Checked);
+            WriteSetting();
 
             this.Visible = false;
         }
