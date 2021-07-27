@@ -89,8 +89,10 @@ namespace imemd
 
         private bool IsFullscreen()
         {
-            Win32API.GetWindowRect(new HandleRef(this, lastActiveWindow), out Win32API.RECT fullRect);
-            Win32API.GetClientRect(lastActiveWindow, out Win32API.RECT cliRect);
+            IntPtr window = Win32API.GetForegroundWindow();
+            Win32API.GetWindowRect(new HandleRef(this, window), out Win32API.RECT fullRect);
+            Win32API.GetClientRect(window, out Win32API.RECT cliRect);
+
             if (fullRect.left == cliRect.left &&
                 fullRect.top == cliRect.top &&
                 fullRect.right == cliRect.right &&
