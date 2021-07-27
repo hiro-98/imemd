@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace imemd
 {
@@ -116,9 +117,9 @@ namespace imemd
             return false;
         }
 
-        private void InputZenkaku()
+        private async void InputZenkaku()
         {
-            System.Threading.Thread.Sleep(this.clickWaitMs); // ウインドウがアクティブになるのを待つ
+            await Task.Delay(this.clickWaitMs); // ウインドウがアクティブになるのを待つ
 
             Win32API.INPUT input = new Win32API.INPUT
             {
