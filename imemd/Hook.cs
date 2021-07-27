@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -9,7 +9,7 @@ namespace imemd
     {
         private int clickWaitMs;
         private int sameWindowSec;
-        private bool iBeamCheck = false;
+        private bool iBeamCheck;
 
         private IntPtr hHook;
         private IntPtr lastActiveWindow;
