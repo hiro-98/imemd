@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -61,6 +61,12 @@ namespace imemd
                     return Win32API.CallNextHookEx(this.hHook, nCode, wParam, lParam);
                 }
 
+                // Iビーム判定
+                if (IBeamCursorCheck() == false)
+                {
+                    return Win32API.CallNextHookEx(this.hHook, nCode, wParam, lParam);
+                }
+
                 // ウインドウ変更時は経過時間に関係なく実行
                 if (IsChangeWindow() == true)
                 {
@@ -70,13 +76,6 @@ namespace imemd
 
                 // 時間経過してないなら実行しない
                 if (IsElapsedSameWindowSec() == false)
-                {
-                    return Win32API.CallNextHookEx(this.hHook, nCode, wParam, lParam);
-                }
-
-
-                // Iビーム判定
-                if (IBeamCursorCheck() == false)
                 {
                     return Win32API.CallNextHookEx(this.hHook, nCode, wParam, lParam);
                 }
