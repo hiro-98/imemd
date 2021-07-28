@@ -12,7 +12,7 @@ namespace imemd
         private bool iBeamCheck;
 
         private IntPtr hHook;
-        private IntPtr lastActiveWindow;
+        private IntPtr lastClickWindow;
         private DateTime lastWindowChange;
         private Win32API.HOOKPROC hHookProc;
         private GCHandle allocHandle;
@@ -36,7 +36,7 @@ namespace imemd
 
             lastWindowChange = new DateTime();
             lastWindowChange = DateTime.Now;
-            lastActiveWindow = Win32API.GetForegroundWindow();
+            lastClickWindow = Win32API.GetForegroundWindow();
 
             return true;
         }
@@ -50,40 +50,51 @@ namespace imemd
 
         private IntPtr MouseHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-
-
             if ((nCode == Win32API.HC_ACTION) &&
                 ((Win32API.MOUSE_MESSAGE.WM_LBUTTONUP == (Win32API.MOUSE_MESSAGE)wParam)))
             {
-                // フルスクリーンなら実行しない
-                if (IsFullscreen() == true)
-                {
-                    return Win32API.CallNextHookEx(this.hHook, nCode, wParam, lParam);
-                }
-
-                // Iビーム判定
-                if (IBeamCursorCheck() == false)
-                {
-                    return Win32API.CallNextHookEx(this.hHook, nCode, wParam, lParam);
-                }
-
-                // ウインドウ変更時は経過時間に関係なく実行
-                if (IsChangeWindow() == true)
+                if (IsExecAction() == true)
                 {
                     InputZenkaku();
-                    return Win32API.CallNextHookEx(this.hHook, nCode, wParam, lParam);
                 }
 
-                // 時間経過してないなら実行しない
-                if (IsElapsedSameWindowSec() == false)
-                {
-                    return Win32API.CallNextHookEx(this.hHook, nCode, wParam, lParam);
-                }
+                lastClickWindow = Win32API.GetForegroundWindow();
+            }
+            return Win32API.CallNextHookEx(this.hHook, nCode, wParam, lParam);
+        }
 
-                InputZenkaku();
+        private bool IsExecAction()
+        {
+            // フルスクリーンなら実行しない
+            if (IsFullscreen() == true)
+            {
+                Debug.WriteLine("Don't Exec, IsFullscreen() == true");
+                return false;
             }
 
-            return Win32API.CallNextHookEx(this.hHook, nCode, wParam, lParam);
+            // Iビーム判定
+            if (IBeamCursorCheck() == false)
+            {
+                Debug.WriteLine("Don't Exec, IBeamCursorCheck() == false");
+                return false;
+            }
+
+            // ウインドウ変更時は経過時間に関係なく実行
+            if (IsChangeWindow() == true)
+            {
+                Debug.WriteLine("Exec, IsChangeWindow() == true");
+                return true;
+            }
+
+            // 時間経過していたら実行
+            if (IsElapsedSameWindowSec() == true)
+            {
+                Debug.WriteLine("Exec, IsElapsedSameWindowSec() == true");
+                return true;
+            }
+
+            Debug.WriteLine("Don't Exec");
+            return false;
         }
 
         private bool IsFullscreen()
@@ -120,6 +131,8 @@ namespace imemd
 
         private async void InputZenkaku()
         {
+            Debug.WriteLine("InputZenkaku()");
+
             await Task.Delay(this.clickWaitMs); // ウインドウがアクティブになるのを待つ
 
             Win32API.INPUT input = new Win32API.INPUT
@@ -146,25 +159,23 @@ namespace imemd
             //Key Up
             input.ki.dwFlags = Win32API.KEYEVENTF_KEYUP;
             Win32API.SendInput(1, ref input, Marshal.SizeOf(typeof(Win32API.INPUT)));
+
+            lastWindowChange = DateTime.Now;
         }
 
         private bool IsElapsedSameWindowSec()
         {
-            bool ret = false;
             if ((lastWindowChange + TimeSpan.FromSeconds(sameWindowSec)) <= DateTime.Now)
             {
-                ret = true;
+                return true;
             }
-            lastWindowChange = DateTime.Now;
-
-            return ret;
+            return false;
         }
 
         private bool IsChangeWindow()
         {
-            if (lastActiveWindow != Win32API.GetForegroundWindow())
+            if (lastClickWindow != Win32API.GetForegroundWindow())
             {
-                lastActiveWindow = Win32API.GetForegroundWindow();
                 return true;
             }
             return false;
