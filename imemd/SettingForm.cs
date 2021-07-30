@@ -7,7 +7,7 @@ namespace imemd
     public partial class SettingForm : Form
     {
         private const string DEFAULT_CLICK_WAIT_MS = "50";
-        private const string DEFAULT_SAME_WINDOW_CHECK = "3";
+        private const string DEFAULT_SAME_WINDOW_CHECK = "0";
         private const string DEFAULT_CHECK_IBEAM = "true";
 
         private Hook hook;
