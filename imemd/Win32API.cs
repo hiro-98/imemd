@@ -57,6 +57,12 @@ namespace imemd
         [DllImport("user32.dll")]
         public static extern int SendInput(int nInputs, ref INPUT pInputs, int cbSize);
 
+        [DllImport("user32.dll")]
+        public static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+
+        [DllImport("user32.dll")]
+        public static extern int GetWindowTextLength(IntPtr hwnd);
+
         [StructLayout(LayoutKind.Sequential)]
         public struct MOUSEINPUT
         {

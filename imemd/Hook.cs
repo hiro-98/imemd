@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace imemd
@@ -72,6 +73,13 @@ namespace imemd
                 return false;
             }
 
+            // Chormeなら実行
+            if (IsChorme() == true)
+            {
+                Debug.WriteLine(", IsChorme() == true");
+                return true;
+            }
+
             // Iビーム判定
             if (IBeamCursorCheck() == false)
             {
@@ -94,6 +102,22 @@ namespace imemd
             }
 
             Debug.WriteLine("Don't Exec");
+            return false;
+        }
+
+        private bool IsChorme()
+        {
+            IntPtr hWnd = Win32API.GetForegroundWindow();
+            int length = Win32API.GetWindowTextLength(hWnd);
+            StringBuilder tsb = new StringBuilder(length + 1);
+            Win32API.GetWindowText(hWnd, tsb, tsb.Capacity);
+            Debug.WriteLine(tsb.ToString());
+
+            if (tsb.ToString().Contains(" - Google Chrome") == true)
+            {
+                return true;
+            }
+
             return false;
         }
 

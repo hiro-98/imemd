@@ -129,6 +129,7 @@
             this.checkIBeam.Size = new System.Drawing.Size(209, 16);
             this.checkIBeam.TabIndex = 30;
             this.checkIBeam.Text = "マウスカーソルがIビームの場合のみ表示";
+            this.tipIBeam.SetToolTip(this.checkIBeam, "Chormeの場合はこのオプションを無視します。");
             this.checkIBeam.UseVisualStyleBackColor = true;
             // 
             // SettingForm
