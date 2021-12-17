@@ -15,6 +15,7 @@ namespace imemd
         private IntPtr hHook;
         private IntPtr lastClickWindow;
         private DateTime lastWindowChange;
+        private DateTime lastClickTime;
         private Win32API.HOOKPROC hHookProc;
         private GCHandle allocHandle;
 
@@ -35,7 +36,6 @@ namespace imemd
                 return false;
             }
 
-            lastWindowChange = new DateTime();
             lastWindowChange = DateTime.Now;
             lastClickWindow = Win32API.GetForegroundWindow();
 
@@ -76,7 +76,7 @@ namespace imemd
             // Chormeなら実行
             if (IsChorme() == true)
             {
-                Debug.WriteLine(", IsChorme() == true");
+                Debug.WriteLine("Exec, IsChorme() == true");
                 return true;
             }
 
@@ -157,7 +157,15 @@ namespace imemd
         {
             Debug.WriteLine("InputZenkaku()");
 
+            lastClickTime = DateTime.Now;
             await Task.Delay(this.clickWaitMs); // ウインドウがアクティブになるのを待つ
+            if (lastClickTime.AddMilliseconds(this.clickWaitMs) > DateTime.Now)
+            {
+                // Delay中に二回目が来ていたらlaxtClickTimeが書き換わっている
+                Debug.WriteLine("Cancel(Double Click)");
+                lastClickTime = DateTime.Now;
+                return;
+            }
 
             Win32API.INPUT input = new Win32API.INPUT
             {

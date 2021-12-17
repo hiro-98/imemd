@@ -173,6 +173,7 @@ namespace imemd
             WM_LBUTTONUP = 0x0202,
             WM_MOUSEMOVE = 0x0200,
             WM_MOUSEWHEEL = 0x020A,
+            WM_LBUTTONDBLCLK = 0x0203,
             WM_RBUTTONDOWN = 0x0204,
             WM_RBUTTONUP = 0x0205
         }
